@@ -1,0 +1,41 @@
+services:
+  backend:
+    image: maven:3.9-eclipse-temurin-21
+    container_name: ecolumea-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:sqlite:/data/webshop.db?busy_timeout=5000&journal_mode=WAL
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
+      - APP_MEDIA_STORAGE_PATH=/data/media
+    volumes:
+      - ./backend:/app
+      - ./backend/data:/data
+    working_dir: /app
+    command: sh -c "mvn -DskipTests clean package && mvn -DskipTests spring-boot:run"
+    networks:
+      - ecolumea-network
+
+  frontend:
+    image: node:20-alpine
+    container_name: ecolumea-frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    environment:
+      - BACKEND_URL=http://backend:8080
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    working_dir: /app
+    command: sh -c "npm ci && npm run build && npm start -- --host 0.0.0.0 --port 4200"
+    networks:
+      - ecolumea-network
+
+networks:
+  ecolumea-network:
+    driver: bridge
+
+volumes:
+  frontend_node_modules:

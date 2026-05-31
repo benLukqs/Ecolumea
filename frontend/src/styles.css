@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  @apply bg-surface text-on-surface antialiased;
+}
+
+body {
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at top, rgba(6, 27, 14, 0.05), transparent 34%),
+    radial-gradient(circle at right top, rgba(107, 93, 62, 0.06), transparent 28%);
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  @apply transition duration-150;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid rgba(6, 27, 14, 0.28);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: rgba(6, 27, 14, 0.16);
+  color: rgb(28, 28, 24);
+}
+
+.shop-card {
+  @apply rounded-lg border border-primary/15 bg-surface-lowest shadow-soft ring-1 ring-inset ring-primary/5;
+}
+
+.shop-card-surface {
+  @apply rounded-lg border border-primary/15 bg-surface-container-low shadow-soft ring-1 ring-inset ring-primary/5;
+}
+
+.shop-card-elevated {
+  @apply rounded-lg border border-primary/15 bg-surface-container shadow-soft ring-1 ring-inset ring-primary/5;
+}
+
+.shop-card-interactive {
+  @apply cursor-pointer transition duration-150 hover:scale-[0.99] hover:border-primary/20 hover:shadow-md;
+}
